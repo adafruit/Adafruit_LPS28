@@ -518,7 +518,7 @@ float Adafruit_LPS28::getPressure() {
  * @brief Gets the current temperature reading
  *
  * @return float Temperature in degrees Celsius
- * @note Resolution is 0.01°C per LSB
+ * @note Resolution is 0.01 degC per LSB
  */
 float Adafruit_LPS28::getTemperature() {
   // Read the 2-byte TEMP_OUT register (signed 16-bit, 2's complement)
