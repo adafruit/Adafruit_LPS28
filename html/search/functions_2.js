@@ -4,6 +4,7 @@ var searchData=
   ['getautozero',['getAutoZero',['../class_adafruit___l_p_s28.html#ab23669ae2572cc5d97e81727b567dcea',1,'Adafruit_LPS28']]],
   ['getaveraging',['getAveraging',['../class_adafruit___l_p_s28.html#a6b0bfe7aa185379b563158bd2f80315f',1,'Adafruit_LPS28']]],
   ['getdatarate',['getDataRate',['../class_adafruit___l_p_s28.html#a0013ae68b3bfea71ec3dc0d115998d48',1,'Adafruit_LPS28']]],
+  ['getevent',['getEvent',['../class_adafruit___l_p_s28___temp.html#a6369df2457248452a0504e4305ee3a57',1,'Adafruit_LPS28_Temp::getEvent()'],['../class_adafruit___l_p_s28___pressure.html#a826688491bcdc017bfe014b5f1bef321',1,'Adafruit_LPS28_Pressure::getEvent()'],['../class_adafruit___l_p_s28.html#a8c0bfe98780f372acee2549328da1019',1,'Adafruit_LPS28::getEvent()']]],
   ['getfifopressure',['getFIFOpressure',['../class_adafruit___l_p_s28.html#ae4afd1482ea83c8a3d34a44a0da1e085',1,'Adafruit_LPS28']]],
   ['getfifostatus',['getFIFOstatus',['../class_adafruit___l_p_s28.html#adccf816887868b5d2abd48e4bfdfa498',1,'Adafruit_LPS28']]],
   ['getfifounreadsamples',['getFIFOunreadSamples',['../class_adafruit___l_p_s28.html#adc4cec46578569353dbc371b6f331c48',1,'Adafruit_LPS28']]],
@@ -12,8 +13,11 @@ var searchData=
   ['getintsource',['getIntSource',['../class_adafruit___l_p_s28.html#a3cdf40cbf0cd6f4291dc7ec2ecf0f577',1,'Adafruit_LPS28']]],
   ['getpressure',['getPressure',['../class_adafruit___l_p_s28.html#a7a514bf3e83667f90dd9fdb025be78c5',1,'Adafruit_LPS28']]],
   ['getpressureoffset',['getPressureOffset',['../class_adafruit___l_p_s28.html#a7ab4351e28aaf81c692517c1ab0de1d8',1,'Adafruit_LPS28']]],
+  ['getpressuresensor',['getPressureSensor',['../class_adafruit___l_p_s28.html#a1e534730387800f9e442d2b6292c9eb7',1,'Adafruit_LPS28']]],
   ['getreferencepressure',['getReferencePressure',['../class_adafruit___l_p_s28.html#acf9be55615882c6cf7be8f2dbfcab829',1,'Adafruit_LPS28']]],
+  ['getsensor',['getSensor',['../class_adafruit___l_p_s28___temp.html#acdb50144fd4a4a8b8354d2c492eb90b9',1,'Adafruit_LPS28_Temp::getSensor()'],['../class_adafruit___l_p_s28___pressure.html#ae5c96a5f964d826f3a625a14f22fb9e7',1,'Adafruit_LPS28_Pressure::getSensor()']]],
   ['getstatus',['getStatus',['../class_adafruit___l_p_s28.html#a63007f57252e6b944ec0dc757f807eb3',1,'Adafruit_LPS28']]],
   ['gettemperature',['getTemperature',['../class_adafruit___l_p_s28.html#ab1417b6b3012c8729095d37d7ba674c7',1,'Adafruit_LPS28']]],
+  ['gettemperaturesensor',['getTemperatureSensor',['../class_adafruit___l_p_s28.html#a4e602a412627a6f5ab5b815c0b96875c',1,'Adafruit_LPS28']]],
   ['getthresholdpressure',['getThresholdPressure',['../class_adafruit___l_p_s28.html#a3c861faab427963c5a5400b2f245f775',1,'Adafruit_LPS28']]]
 ];

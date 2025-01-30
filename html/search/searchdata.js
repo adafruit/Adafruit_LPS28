@@ -6,8 +6,9 @@ var indexSectionsWithContent =
   3: "abgrst",
   4: "l",
   5: "l",
-  6: "l",
-  7: "a"
+  6: "a",
+  7: "l",
+  8: "a"
 };
 
 var indexSectionNames =
@@ -18,8 +19,9 @@ var indexSectionNames =
   3: "functions",
   4: "enums",
   5: "enumvalues",
-  6: "defines",
-  7: "pages"
+  6: "related",
+  7: "defines",
+  8: "pages"
 };
 
 var indexSectionLabels =
@@ -30,7 +32,8 @@ var indexSectionLabels =
   3: "Functions",
   4: "Enumerations",
   5: "Enumerator",
-  6: "Macros",
-  7: "Pages"
+  6: "Friends",
+  7: "Macros",
+  8: "Pages"
 };
 
