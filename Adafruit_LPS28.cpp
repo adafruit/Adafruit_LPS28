@@ -258,6 +258,12 @@ float Adafruit_LPS28::getTemperature() {
   return temperature_celsius;
 }
 
+
+uint8_t Adafruit_LPS28::getFIFOstatus() {
+  Adafruit_BusIO_Register fifo_status2(i2c_dev, LPS28_FIFO_STATUS2, 1);
+  return fifo_status2.read();
+}
+
 float Adafruit_LPS28::getFIFOpressure() {
   // Read the 3-byte FIFO_DATA_OUT_PRESS_XL register
   Adafruit_BusIO_Register fifo_pressure_out(
