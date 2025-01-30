@@ -22,6 +22,9 @@ void setup() {
   lps28.setDataRate(LPS28_ODR_200_HZ);
   lps28.setAveraging(LPS28_AVG_4);
 
+  // Set range to 4060 hPa
+  lps28.setFullScaleMode(true);
+
   // Enable DRDY interrupt on the interrupt pin
   lps28.setInterruptPin(
     true,  // Polarity: Active high

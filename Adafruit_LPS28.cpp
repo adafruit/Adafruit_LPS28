@@ -29,9 +29,17 @@
 #include "Adafruit_LPS28.h"
 
 /**
- * @brief Construct a new Adafruit LPS28 object
+ * @brief Main LPS28 driver class constructor
+ *
+ * @param sensor_id ID to differentiate multiple sensors in the same sketch.
+ *                  If not specified, defaults to 0x28. Temperature sensor will
+ *                  use this ID and pressure sensor will use sensor_id + 1
  */
-Adafruit_LPS28::Adafruit_LPS28() {}
+Adafruit_LPS28::Adafruit_LPS28(int32_t sensor_id) {
+  _sensorid = sensor_id;
+  _sensorid_temp = sensor_id;
+  _sensorid_pressure = sensor_id + 1;
+}
 
 /**
  * @brief Initializes the sensor with given parameters, tried reading
@@ -571,4 +579,152 @@ float Adafruit_LPS28::getFIFOpressure() {
   }
 
   return pressure_hpa;
+}
+
+/******************** Sensor interface */
+
+/**
+ * @brief Gets a pointer to the temperature sensor object
+ *
+ * @return Adafruit_Sensor* Pointer to an Adafruit_Sensor object for temperature
+ * readings
+ */
+Adafruit_Sensor *Adafruit_LPS28::getTemperatureSensor(void) {
+  if (!temp_sensor) {
+    temp_sensor = new Adafruit_LPS28_Temp(this);
+  }
+  return temp_sensor;
+}
+
+/**
+ * @brief Gets a pointer to the pressure sensor object
+ *
+ * @return Adafruit_Sensor* Pointer to an Adafruit_Sensor object for pressure
+ * readings
+ */
+Adafruit_Sensor *Adafruit_LPS28::getPressureSensor(void) {
+  if (!pressure_sensor) {
+    pressure_sensor = new Adafruit_LPS28_Pressure(this);
+  }
+  return pressure_sensor;
+}
+
+/**
+ * @brief Gets both pressure and temperature readings in unified sensor format
+ *
+ * @param pressure Pointer to pressure event structure to be filled
+ * @param temp Pointer to temperature event structure to be filled
+ * @return true if reading was successful
+ * @return false if reading failed
+ */
+bool Adafruit_LPS28::getEvent(sensors_event_t *pressure,
+                              sensors_event_t *temp) {
+  uint32_t timestamp = millis();
+
+  // Read the sensor
+  float pressure_hPa = getPressure();
+  float temperature_C = getTemperature();
+
+  fillTempEvent(temp, timestamp);
+  fillPressureEvent(pressure, timestamp);
+
+  return true;
+}
+
+/**
+ * @brief Populates a temperature event structure with current readings
+ *
+ * @param temp Pointer to temperature event structure to be filled
+ * @param timestamp Current timestamp in milliseconds
+ */
+void Adafruit_LPS28::fillTempEvent(sensors_event_t *temp, uint32_t timestamp) {
+  memset(temp, 0, sizeof(sensors_event_t));
+  temp->version = sizeof(sensors_event_t);
+  temp->sensor_id = _sensorid_temp; // Use _sensorid_temp instead of _sensorID
+  temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  temp->timestamp = timestamp;
+  temp->temperature = getTemperature();
+}
+
+/**
+ * @brief Populates a pressure event structure with current readings
+ *
+ * @param pressure Pointer to pressure event structure to be filled
+ * @param timestamp Current timestamp in milliseconds
+ */
+void Adafruit_LPS28::fillPressureEvent(sensors_event_t *pressure,
+                                       uint32_t timestamp) {
+  memset(pressure, 0, sizeof(sensors_event_t));
+  pressure->version = sizeof(sensors_event_t);
+  pressure->sensor_id =
+      _sensorid_pressure; // Use _sensorid_pressure instead of _sensorID
+  pressure->type = SENSOR_TYPE_PRESSURE;
+  pressure->timestamp = timestamp;
+  pressure->pressure = getPressure();
+}
+
+/**
+ * @brief Gets the current temperature reading in unified sensor format
+ *
+ * @param event Pointer to sensor event structure to be filled with temperature
+ * data
+ * @return true Always returns true as reading cannot fail
+ */
+bool Adafruit_LPS28_Temp::getEvent(sensors_event_t *event) {
+  _theLPS28->fillTempEvent(event, millis());
+  return true;
+}
+
+/**
+ * @brief Gets the temperature sensor details
+ *
+ * Provides metadata about the temperature sensor including its
+ * range, resolution, and other capabilities.
+ *
+ * @param sensor Pointer to sensor metadata structure to be filled
+ */
+void Adafruit_LPS28_Temp::getSensor(sensor_t *sensor) {
+  memset(sensor, 0, sizeof(sensor_t));
+  strncpy(sensor->name, "LPS28", sizeof(sensor->name) - 1);
+  sensor->name[sizeof(sensor->name) - 1] = 0;
+  sensor->version = 1;
+  sensor->sensor_id = _sensorID;
+  sensor->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  sensor->min_delay = 0;
+  sensor->min_value = -40.0; // -40 degree C
+  sensor->max_value = 85.0;  // 85 degree C
+  sensor->resolution = 0.01; // 0.01 degree C
+}
+
+/**
+ * @brief Gets the current pressure reading in unified sensor format
+ *
+ * @param event Pointer to sensor event structure to be filled with pressure
+ * data
+ * @return true Always returns true as reading cannot fail
+ */
+bool Adafruit_LPS28_Pressure::getEvent(sensors_event_t *event) {
+  _theLPS28->fillPressureEvent(event, millis());
+  return true;
+}
+
+/**
+ * @brief Gets the pressure sensor details
+ *
+ * Provides metadata about the pressure sensor including its
+ * range, resolution, and other capabilities.
+ *
+ * @param sensor Pointer to sensor metadata structure to be filled
+ */
+void Adafruit_LPS28_Pressure::getSensor(sensor_t *sensor) {
+  memset(sensor, 0, sizeof(sensor_t));
+  strncpy(sensor->name, "LPS28", sizeof(sensor->name) - 1);
+  sensor->name[sizeof(sensor->name) - 1] = 0;
+  sensor->version = 1;
+  sensor->sensor_id = _sensorID;
+  sensor->type = SENSOR_TYPE_PRESSURE;
+  sensor->min_delay = 0;
+  sensor->min_value = 260.0;   // 260 hPa
+  sensor->max_value = 4060.0;  // 4060 hPa
+  sensor->resolution = 0.0002; // Based on full-scale mode
 }

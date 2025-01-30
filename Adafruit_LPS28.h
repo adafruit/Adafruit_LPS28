@@ -20,6 +20,7 @@
 
 #include <Adafruit_BusIO_Register.h>
 #include <Adafruit_I2CDevice.h>
+#include <Adafruit_Sensor.h>
 #include <Arduino.h>
 
 // I2C Address and Register Definitions
@@ -115,6 +116,42 @@ typedef enum {
       0b111 ///< Continuous-to-FIFO mode (TRIG = 1, F_MODE[1:0] = 11)
 } lps28_fifo_mode_t;
 
+/** Adafruit Unified Sensor interface for temperature component of LPS28 */
+class Adafruit_LPS28;
+
+/**
+ * @brief Adafruit Unified Sensor interface for temperature component of LPS28
+ *
+ * Implements temperature-specific functionality using the Adafruit
+ * Unified Sensor interface for the LPS28 sensor.
+ */
+class Adafruit_LPS28_Temp : public Adafruit_Sensor {
+public:
+  /** @brief Create an Adafruit_Sensor compatible object for the temp sensor
+      @param parent A pointer to the LPS28 class */
+  Adafruit_LPS28_Temp(Adafruit_LPS28 *parent) { _theLPS28 = parent; }
+  bool getEvent(sensors_event_t *);
+  void getSensor(sensor_t *);
+
+private:
+  int _sensorID = 0x280; ///< Unique sensor identifier for temperature
+  Adafruit_LPS28 *_theLPS28 = NULL; ///< Pointer to parent LPS28 object
+};
+
+/** Adafruit Unified Sensor interface for pressure component of LPS28 */
+class Adafruit_LPS28_Pressure : public Adafruit_Sensor {
+public:
+  /** @brief Create an Adafruit_Sensor compatible object for the pressure sensor
+      @param parent A pointer to the LPS28 class */
+  Adafruit_LPS28_Pressure(Adafruit_LPS28 *parent) { _theLPS28 = parent; }
+  bool getEvent(sensors_event_t *);
+  void getSensor(sensor_t *);
+
+private:
+  int _sensorID = 0x281;            ///< Unique sensor identifier for pressure
+  Adafruit_LPS28 *_theLPS28 = NULL; ///< Pointer to parent LPS28 object
+};
+
 /**
  * @brief Main LPS28 sensor class
  *
@@ -124,7 +161,12 @@ typedef enum {
  */
 class Adafruit_LPS28 {
 public:
-  Adafruit_LPS28();
+  Adafruit_LPS28(
+      int32_t sensor_id = 0x28); // Default ID of 0x28 if none provided
+
+  Adafruit_Sensor *getTemperatureSensor(void);
+  Adafruit_Sensor *getPressureSensor(void);
+  bool getEvent(sensors_event_t *pressure, sensors_event_t *temp);
 
   bool begin(TwoWire *theWire = &Wire,
              uint8_t i2c_addr = LPS28_DEFAULT_ADDRESS);
@@ -187,6 +229,22 @@ public:
   float getFIFOpressure();
 
 private:
+  Adafruit_LPS28_Temp *temp_sensor = NULL; ///< Temperature sensor data object
+  Adafruit_LPS28_Pressure *pressure_sensor =
+      NULL; ///< Pressure sensor data object
+
+  uint16_t _sensorid,
+      _sensorid_pressure, ///< ID number for pressure
+      _sensorid_temp;     ///< ID number for temperature
+
+  friend class Adafruit_LPS28_Temp;     ///< Gives access to private members to
+                                        ///< Temperature data object
+  friend class Adafruit_LPS28_Pressure; ///< Gives access to private members to
+                                        ///< Pressure data object
+
+  void fillPressureEvent(sensors_event_t *pressure, uint32_t timestamp);
+  void fillTempEvent(sensors_event_t *temp, uint32_t timestamp);
+
   Adafruit_I2CDevice *i2c_dev = nullptr; ///< Pointer to I2C device interface
 };
 
