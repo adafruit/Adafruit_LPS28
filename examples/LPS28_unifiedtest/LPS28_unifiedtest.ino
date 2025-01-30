@@ -33,7 +33,7 @@ void setup(void) {
   Serial.println("LPS28 Found!");
 
   // Set range to 4060 hPa
-  lps28.setFullScaleMode(true);
+  lps.setFullScaleMode(true);
   
   // Get pointers to the sensors for the unified sensor API
   lps_temp = lps.getTemperatureSensor();
