@@ -1,8 +1,29 @@
-/**
- * @file Adafruit_LPS28.cpp
- * @brief Driver for the LPS28 Pressure Sensor
- * @author Adafruit Industries
- * @copyright BSD License
+// For Adafruit_LPS28.cpp:
+/*!
+ *  @file Adafruit_LPS28.cpp
+ *
+ *  @mainpage Adafruit LPS28 Pressure & Temperature Sensor library
+ *
+ *  @section intro_sec Introduction
+ *
+ *  This is a library for the LPS28 Pressure & Temperature Sensor
+ *
+ *  Designed specifically to work with the Adafruit LPS28 Breakout
+ *  ----> http://www.adafruit.com/products/6067
+ *
+ *  These sensors use I2C to communicate, 2 pins are required to interface.
+ *
+ *  Adafruit invests time and resources providing this open source code,
+ *  please support Adafruit and open-source hardware by purchasing products
+ *  from Adafruit!
+ *
+ *  @section author Author
+ *
+ *  Written by Limor Fried/Ladyada for Adafruit Industries.
+ *
+ *  @section license License
+ *
+ *  MIT license, all text above must be included in any redistribution
  */
 
 #include "Adafruit_LPS28.h"
@@ -15,7 +36,7 @@ Adafruit_LPS28::Adafruit_LPS28() {}
 /**
  * @brief Initializes the sensor with given parameters, tried reading
  * and veriying the WHOAMI register
- * 
+ *
  * @param theWire The Wire object to be used for I2C communication
  * @param i2c_addr The I2C address of the sensor
  * @return true If sensor initialization was successful
@@ -33,7 +54,7 @@ bool Adafruit_LPS28::begin(TwoWire *theWire, uint8_t i2c_addr) {
 
 /**
  * @brief Sets the pressure threshold for interrupt generation
- * 
+ *
  * @param threshold The pressure threshold value to set
  * @return true If threshold was set successfully
  * @return false If threshold setting failed
@@ -45,7 +66,7 @@ bool Adafruit_LPS28::setThresholdPressure(uint16_t threshold) {
 
 /**
  * @brief Gets the current pressure threshold value for the IRQ
- * 
+ *
  * @return uint16_t The current pressure threshold value
  */
 uint16_t Adafruit_LPS28::getThresholdPressure() {
@@ -55,7 +76,7 @@ uint16_t Adafruit_LPS28::getThresholdPressure() {
 
 /**
  * @brief Sets the data output rate of the sensor (ODR)
- * 
+ *
  * @param odr The desired output data rate from lps28_odr_t enum
  * @return true If data rate was set successfully
  * @return false If data rate setting failed
@@ -68,7 +89,7 @@ bool Adafruit_LPS28::setDataRate(lps28_odr_t odr) {
 
 /**
  * @brief Gets the current data output rate setting (ODR)
- * 
+ *
  * @return lps28_odr_t The current output data rate setting
  */
 lps28_odr_t Adafruit_LPS28::getDataRate() {
@@ -77,10 +98,9 @@ lps28_odr_t Adafruit_LPS28::getDataRate() {
   return (lps28_odr_t)odr_bits.read();
 }
 
-
 /**
  * @brief Sets the number of pressure and temperature samples to average
- * 
+ *
  * @param avg The averaging setting from lps28_avg_t enum
  * @return true If averaging setting was set successfully
  * @return false If averaging setting failed
@@ -93,7 +113,7 @@ bool Adafruit_LPS28::setAveraging(lps28_avg_t avg) {
 
 /**
  * @brief Gets the current averaging setting
- * 
+ *
  * @return lps28_avg_t The current averaging setting
  */
 lps28_avg_t Adafruit_LPS28::getAveraging() {
@@ -104,7 +124,7 @@ lps28_avg_t Adafruit_LPS28::getAveraging() {
 
 /**
  * @brief Reboots the memory content of the sensor
- * 
+ *
  * @return true If memory reboot was successful
  * @return false If memory reboot failed
  */
@@ -116,8 +136,9 @@ bool Adafruit_LPS28::rebootMemory() {
 
 /**
  * @brief Sets the full scale mode of the sensor
- * 
- * @param mode true for FS_MODE=1 (1/2048 hPa/LSB), false for FS_MODE=0 (1/4096 hPa/LSB)
+ *
+ * @param mode true for FS_MODE=1 (1/2048 hPa/LSB), false for FS_MODE=0 (1/4096
+ * hPa/LSB)
  * @return true If full scale mode was set successfully
  * @return false If full scale mode setting failed
  */
@@ -129,7 +150,7 @@ bool Adafruit_LPS28::setFullScaleMode(bool mode) {
 
 /**
  * @brief Gets the current full scale mode setting
- * 
+ *
  * @return true FS_MODE=1 (1/2048 hPa/LSB)
  * @return false FS_MODE=0 (1/4096 hPa/LSB)
  */
@@ -141,7 +162,7 @@ bool Adafruit_LPS28::getFullScaleMode() {
 
 /**
  * @brief Enables or disables the low-pass filter at ODR/9
- * 
+ *
  * @param enable true to enable the low-pass filter, false to disable
  * @return true If setting was applied successfully
  * @return false If setting failed
@@ -152,10 +173,9 @@ bool Adafruit_LPS28::setLowPassODR9(bool enable) {
   return lpfp_cfg_bit.write(enable);
 }
 
-
 /**
  * @brief Performs a software reset of the sensor
- * 
+ *
  * @return true If reset was successful
  * @return false If reset failed
  */
@@ -167,7 +187,7 @@ bool Adafruit_LPS28::reset() {
 
 /**
  * @brief Triggers a one-shot measurement
- * 
+ *
  * @return true If one-shot measurement was triggered successfully
  * @return false If trigger failed
  */
@@ -179,7 +199,7 @@ bool Adafruit_LPS28::triggerOneShot() {
 
 /**
  * @brief Configures the interrupt pin settings
- * 
+ *
  * @param polarity true for active-high, false for active-low
  * @param openDrain true for open-drain output, false for push-pull
  * @return true If interrupt pin configuration was successful
@@ -194,7 +214,7 @@ bool Adafruit_LPS28::setInterruptPin(bool polarity, bool openDrain) {
 
 /**
  * @brief Enables or disables the SDA line internal pull-up resistor
- * 
+ *
  * @param enable true to enable pull-up, false to disable
  * @return true If pull-up setting was changed successfully
  * @return false If setting change failed
@@ -207,7 +227,7 @@ bool Adafruit_LPS28::setSDAPullup(bool enable) {
 
 /**
  * @brief Enables or disables the INT pin internal pull-down resistor
- * 
+ *
  * @param enable true to enable pull-down, false to disable
  * @return true If pull-down setting was changed successfully
  * @return false If setting change failed
@@ -220,7 +240,7 @@ bool Adafruit_LPS28::setINTPulldown(bool enable) {
 
 /**
  * @brief Sets up automatic reference pressure mode
- * 
+ *
  * @param enable true to enable auto reference pressure, false to disable
  * @return true If auto reference pressure setting was changed successfully
  * @return false If setting change failed
@@ -231,10 +251,9 @@ bool Adafruit_LPS28::setAutoReferencePressure(bool enable) {
   return autozero_bit.write(enable);
 }
 
-
 /**
  * @brief Gets the current auto reference pressure setting
- * 
+ *
  * @return true If auto reference pressure is enabled
  * @return false If auto reference pressure is disabled
  */
@@ -246,7 +265,7 @@ bool Adafruit_LPS28::getAutoReferencePressure() {
 
 /**
  * @brief Resets the auto reference pressure setting
- * 
+ *
  * @return true If reset was successful
  * @return false If reset failed
  */
@@ -258,7 +277,7 @@ bool Adafruit_LPS28::resetAutoReferencePressure() {
 
 /**
  * @brief Enables or disables the auto-zero function
- * 
+ *
  * @param enable true to enable auto-zero, false to disable
  * @return true If auto-zero setting was changed successfully
  * @return false If setting change failed
@@ -271,7 +290,7 @@ bool Adafruit_LPS28::setAutoZero(bool enable) {
 
 /**
  * @brief Gets the current auto-zero setting
- * 
+ *
  * @return true If auto-zero is enabled
  * @return false If auto-zero is disabled
  */
@@ -283,7 +302,7 @@ bool Adafruit_LPS28::getAutoZero() {
 
 /**
  * @brief Resets the auto-zero function
- * 
+ *
  * @return true If reset was successful
  * @return false If reset failed
  */
@@ -295,7 +314,7 @@ bool Adafruit_LPS28::resetAutoZero() {
 
 /**
  * @brief Configures pressure interrupt settings
- * 
+ *
  * @param low Enable low pressure interrupt
  * @param high Enable high pressure interrupt
  * @param latching Enable latching mode for interrupts
@@ -312,7 +331,7 @@ bool Adafruit_LPS28::setPressureInterrupt(bool low, bool high, bool latching) {
 
 /**
  * @brief Configures which conditions trigger the interrupt pin
- * 
+ *
  * @param drdy Enable data ready interrupt
  * @param drdy_pulse Enable pulsed mode for data ready interrupt
  * @param int_enable Enable pressure threshold interrupt
@@ -349,10 +368,9 @@ bool Adafruit_LPS28::setIntPinOutput(bool drdy, bool drdy_pulse,
          fifo_watermark_ok && fifo_overrun_ok;
 }
 
-
 /**
  * @brief Configures the FIFO operation mode
- * 
+ *
  * @param stop_on_watermark Stop collecting data when watermark is reached
  * @param mode FIFO operation mode from lps28_fifo_mode_t enum
  * @return true If FIFO configuration was successful
@@ -375,7 +393,7 @@ bool Adafruit_LPS28::setFIFOmode(bool stop_on_watermark,
 
 /**
  * @brief Sets the FIFO watermark level
- * 
+ *
  * @param wtm Watermark level (0-127)
  * @return true If watermark was set successfully
  * @return false If setting failed
@@ -387,7 +405,7 @@ bool Adafruit_LPS28::setFIFOWatermark(uint8_t wtm) {
 
 /**
  * @brief Gets the current FIFO watermark level
- * 
+ *
  * @return uint8_t Current watermark level (0-127)
  */
 uint8_t Adafruit_LPS28::getFIFOWatermark() {
@@ -397,7 +415,7 @@ uint8_t Adafruit_LPS28::getFIFOWatermark() {
 
 /**
  * @brief Gets the current reference pressure value
- * 
+ *
  * @return int16_t Current reference pressure value
  */
 int16_t Adafruit_LPS28::getReferencePressure() {
@@ -407,7 +425,7 @@ int16_t Adafruit_LPS28::getReferencePressure() {
 
 /**
  * @brief Sets the pressure offset value
- * 
+ *
  * @param offset Pressure offset value to set
  * @return true If offset was set successfully
  * @return false If setting failed
@@ -419,7 +437,7 @@ bool Adafruit_LPS28::setPressureOffset(int16_t offset) {
 
 /**
  * @brief Gets the current pressure offset value
- * 
+ *
  * @return int16_t Current pressure offset value
  */
 int16_t Adafruit_LPS28::getPressureOffset() {
@@ -429,7 +447,7 @@ int16_t Adafruit_LPS28::getPressureOffset() {
 
 /**
  * @brief Gets the source of the last interrupt
- * 
+ *
  * @return uint8_t Interrupt source register value
  *         Bit 7: AUTOZERO
  *         Bit 6: RESET_ARP
@@ -447,7 +465,7 @@ uint8_t Adafruit_LPS28::getIntSource() {
 
 /**
  * @brief Gets the number of unread samples in the FIFO
- * 
+ *
  * @return uint8_t Number of unread FIFO samples
  */
 uint8_t Adafruit_LPS28::getFIFOunreadSamples() {
@@ -457,7 +475,7 @@ uint8_t Adafruit_LPS28::getFIFOunreadSamples() {
 
 /**
  * @brief Gets the current sensor status
- * 
+ *
  * @return uint8_t Status register value
  *         Bit 3: P_OR (Pressure data overrun)
  *         Bit 2: T_OR (Temperature data overrun)
@@ -471,7 +489,7 @@ uint8_t Adafruit_LPS28::getStatus() {
 
 /**
  * @brief Gets the current pressure reading
- * 
+ *
  * @return float Pressure reading in hPa (hectopascals)
  * @note Resolution depends on FS_MODE:
  *       - FS_MODE = 0: 1 LSB = 1/4096 hPa
@@ -498,7 +516,7 @@ float Adafruit_LPS28::getPressure() {
 
 /**
  * @brief Gets the current temperature reading
- * 
+ *
  * @return float Temperature in degrees Celsius
  * @note Resolution is 0.01°C per LSB
  */
@@ -515,7 +533,7 @@ float Adafruit_LPS28::getTemperature() {
 
 /**
  * @brief Gets the current FIFO status
- * 
+ *
  * @return uint8_t FIFO status register value
  *         Bit 7-6: FIFO_FULL_IA (FIFO full interrupt active)
  *         Bit 5: FIFO_OVR_IA (FIFO overrun interrupt active)
@@ -529,7 +547,7 @@ uint8_t Adafruit_LPS28::getFIFOstatus() {
 
 /**
  * @brief Reads the next pressure value from the FIFO buffer
- * 
+ *
  * @return float Pressure reading from FIFO in hPa (hectopascals)
  * @note Resolution depends on FS_MODE:
  *       - FS_MODE = 0: 1 LSB = 1/4096 hPa

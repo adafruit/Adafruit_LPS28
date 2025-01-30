@@ -1,3 +1,20 @@
+/*!
+ *  @file Adafruit_LPS28.h
+ *
+ *  This is a library for the LPS28 Pressure & Temperature Sensor
+ *
+ *  Designed specifically to work with the Adafruit LPS28 Breakout
+ *  ----> http://www.adafruit.com/products/6067
+ *
+ *  These pressure sensors use I2C to communicate, 2 pins are required to
+ * interface Adafruit invests time and resources providing this open source
+ * code, please support Adafruit and open-source hardware by purchasing products
+ *  from Adafruit!
+ *
+ *  Written by Limor Fried/Ladyada for Adafruit Industries.
+ *  MIT license, all text above must be included in any redistribution.
+ */
+
 #ifndef ADAFRUIT_LPS28_H
 #define ADAFRUIT_LPS28_H
 
@@ -48,7 +65,11 @@
 #define LPS28_INT_SOURCE_PH 0x08      ///< High pressure event flag (bit 3)
 #define LPS28_INT_SOURCE_BOOT_ON 0x80 ///< Boot status flag (bit 7)
 
-// Output Data Rate (ODR) configuration (Table 19)
+/**
+ * @brief Output Data Rate (ODR) settings
+ *
+ * Available sampling rates for the sensor
+ */
 typedef enum {
   LPS28_ODR_ONESHOT = 0b0000, ///< One-shot mode
   LPS28_ODR_1_HZ = 0b0001,    ///< 1 Hz
@@ -61,7 +82,11 @@ typedef enum {
   LPS28_ODR_200_HZ = 0b1000   ///< 200 Hz
 } lps28_odr_t;
 
-// Averaging (AVG) selection (Table 20)
+/**
+ * @brief Averaging settings
+ *
+ * Number of samples to average for each measurement
+ */
 typedef enum {
   LPS28_AVG_4 = 0b000,   ///< 4 samples
   LPS28_AVG_8 = 0b001,   ///< 8 samples
@@ -72,7 +97,11 @@ typedef enum {
   LPS28_AVG_512 = 0b111  ///< 512 samples
 } lps28_avg_t;
 
-// FIFO Mode Selection based on TRIG_MODE and F_MODE bits
+/**
+ * @brief FIFO operation modes
+ *
+ * Available FIFO operation modes based on TRIG_MODE and F_MODE bits
+ */
 typedef enum {
   LPS28_FIFO_BYPASS = 0b00, ///< Bypass mode (F_MODE[1:0] = 00)
   LPS28_FIFO_FIFO = 0b01,   ///< FIFO mode (TRIG = 0, F_MODE[1:0] = 01)
@@ -86,6 +115,13 @@ typedef enum {
       0b111 ///< Continuous-to-FIFO mode (TRIG = 1, F_MODE[1:0] = 11)
 } lps28_fifo_mode_t;
 
+/**
+ * @brief Main LPS28 sensor class
+ *
+ * This class provides an interface for interacting with the LPS28 pressure
+ * sensor. It handles initialization, configuration, and data reading from the
+ * sensor.
+ */
 class Adafruit_LPS28 {
 public:
   Adafruit_LPS28();
