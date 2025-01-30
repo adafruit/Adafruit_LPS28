@@ -253,7 +253,7 @@ float Adafruit_LPS28::getTemperature() {
   int16_t raw_temperature = (int16_t)temp_out.read();
 
   // Convert raw temperature to degrees Celsius
-  float temperature_celsius = raw_temperature * 0.01; // 1 LSB = 0.01 °C
+  float temperature_celsius = raw_temperature * 0.01; // 1 LSB = 0.01 deg C
 
   return temperature_celsius;
 }
