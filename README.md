@@ -5,7 +5,7 @@ This is the Library for the LPS28 family of barometric pressure sensors for Ardu
 
 Tested and works great with the Adafruit LPS28 Breakout Board
 
-[<img src="assets/board.png?raw=true" width="500px">](https://www.adafruit.com/products/4530)
+[<img src="assets/board.png?raw=true" width="500px">](https://www.adafruit.com/products/6067)
 
 This chip uses I2C to communicate, 2 pins are required to interface
 
